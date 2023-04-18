@@ -66,10 +66,11 @@ def process_money(current_resources, coffee_choice):
     total_coin_value = round(fsum(inserted_coin), 2) # Total amount the user has paid for their coffee
     if total_coin_value < coffee_choice_cost: # Check if user did not pay enough first
         print(f"Sorry that's not enough money, you've only entered ${total_coin_value:.2f}. Coins have been refunded.")
+        return current_resources
     elif total_coin_value > coffee_choice_cost: # User can afford, process change since they have overpaid
         user_refund = total_coin_value - coffee_choice_cost
         print(f"Here is ${user_refund:.2f} in change.")
-    current_resources["money"] += coffee_choice_cost
+    current_resources["money"] += coffee_choice_cost # Adds value to machine if user overpaid or paid exact amount skipped above elif statement
     return current_resources
 
 
@@ -77,7 +78,7 @@ def process_coffee(current_resources, coffee_choice):
     """Deducts the resources needed from the machines and makes the coffee for the user"""
     for key in resources:
         if key != "money": # Ignores the money option
-            current_resources[key] -= MENU[coffee_choice]["ingredients"][key]
+            current_resources[key] -= MENU[coffee_choice]["ingredients"][key] # Deducts resources based on chosen coffee item
     print(f'Here is your {coffee_choice}. ☕ Enjoy! ')
     return current_resources
 
