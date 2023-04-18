@@ -39,19 +39,6 @@ from string import digits
 from math import fsum
 
 ### Coffee Machine Main Functions
-def coffee_choice():
-    """Asks for and validates the choice of coffee input by user, and secret off and reports options for maintainers"""
-    valid_choice = input(f"What would you like? (espresso/latte/cappuccino): ").lower()
-    if valid_choice in ('espresso', 'latte', 'cappuccino'): # Current coffee options provided
-        return valid_choice
-    elif valid_choice == 'off': # Secret option to turn off the coffee machine i.e. shut down the Python script
-        print("Shutting down the coffee machine..")
-        exit()
-    elif valid_choice == 'report': # Print out a report of current resources in the coffee machine
-        print(f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g\nMoney: ${resources["money"]:.2f}')
-        return coffee_choice()
-    print("Sorry, we don't have that! Please try choosing one of the three available options.")
-    return coffee_choice()
 
 
 def process_money(current_resources, coffee_choice):
@@ -66,13 +53,12 @@ def process_money(current_resources, coffee_choice):
                 coins_inserted += str(i)
         if coins_inserted == '':
             print("You did not enter a number, try again.")
-            return validate_coins()
+            return validate_coins(coin_option)
         return int(coins_inserted)
     
     
     coffee_choice_cost = MENU[coffee_choice]["cost"]
     print(f'{coffee_choice.title()} costs ${coffee_choice_cost:.2f}.\nPlease insert coins.')
-    
     coin_options = {"quarters": .25, "dimes": .10, "nickles": .05, "pennies": .01}
     inserted_coin = []
     for coin in coin_options:
@@ -99,7 +85,7 @@ def process_coffee(current_resources, coffee_choice):
 def resource_check(current_resources, coffee_choice):
     """Checks if there is a sufficient amount of resources in the machine before processing the users order"""    
     sufficient_resources = True
-    for key in resources:
+    for key in current_resources:
         if key != "money": # Ignores the money option
             if MENU[coffee_choice]["ingredients"][key] > current_resources[key]:
                 print(f"Sorry there is not enough {key}.")
@@ -108,6 +94,22 @@ def resource_check(current_resources, coffee_choice):
         current_resources = process_money(current_resources, coffee_choice)
         current_resources = process_coffee(current_resources, coffee_choice)
     return current_resources
+
+
+def coffee_choice():
+    """Asks for and validates the choice of coffee input by user, and secret off and reports options for maintainers"""
+    valid_choice = input(f"What would you like? (espresso/latte/cappuccino): ").lower()
+    if valid_choice in ('espresso', 'latte', 'cappuccino'): # Current coffee options provided
+        return valid_choice
+    elif valid_choice == 'off': # Secret option to turn off the coffee machine i.e. shut down the Python script
+        print("Shutting down the coffee machine..")
+        exit()
+    elif valid_choice == 'report': # Secret option to print out a report of current resources in the coffee machine
+        print(f'Water: {resources["water"]}ml\nMilk: {resources["milk"]}ml\nCoffee: {resources["coffee"]}g\nMoney: ${resources["money"]:.2f}')
+        return coffee_choice()
+    print("Sorry, we don't have that! Please try choosing one of the three available options.")
+    return coffee_choice()
+
 
 # Coffee Machine Loop
 while True: # Maintainer can break loop by entering "off"
