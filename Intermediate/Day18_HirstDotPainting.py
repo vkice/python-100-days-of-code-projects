@@ -15,7 +15,7 @@ rgb_colors = [(71, 95, 116), (113, 143, 168), (34, 51, 68), (251, 245, 196),
 
 # Initialize object and values
 turtle.colormode(255) # RGB Mode
-turtle.screensize(canvwidth=1000, canvheight=1000)
+turtle.setup(width=1000, height=1000)
 turtle.setworldcoordinates(llx = 0, lly = -50, urx = 1000, ury = 1000) # Optimal values for starting point and the drawing for-loop
 drawing_point = turtle.Turtle()
 drawing_point.hideturtle()
@@ -32,7 +32,7 @@ for _ in range(10): # Moves drawing point vertically
         drawing_point.dot(50, random.choice(rgb_colors))
         drawing_point.forward(50)
     drawing_point.setx(0) # Reset back to left side of screen
-    y_pos += 100
+    y_pos += 105
     drawing_point.sety(y_pos)
 
 screen = turtle.Screen()
