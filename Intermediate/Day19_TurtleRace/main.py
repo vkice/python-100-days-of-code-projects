@@ -4,6 +4,7 @@ from turtle_racers import Race
 
 t.setup(width=500, height=400)
 screen = Screen()
+screen.title("Turtle Race")
 race = Race()
 is_racing = True
 
