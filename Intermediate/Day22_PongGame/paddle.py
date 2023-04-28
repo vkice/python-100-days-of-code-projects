@@ -25,11 +25,7 @@ class Paddle(Turtle):
         self.goto(350, 0)
         self.screen.update()
         
-        
-    def detect_collision(self):
-        """Detects if the moved snake head position is on a segment of it's body"""
-        
-        
+    
     # Change heading of the player's paddle and moves in that direction, does not let paddle outside of screen
     def up(self):
         """Moves the player paddle up"""
