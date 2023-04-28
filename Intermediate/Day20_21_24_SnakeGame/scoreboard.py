@@ -2,6 +2,7 @@ from turtle import Turtle
 ALIGN = "center"
 FONT = ("calibri", 16, "bold")
 GAME_OVER_FONT = ("calibri", 60, "bold")
+HIGH_SCORE_LOCATION = "high_score.txt"
 
 class Scoreboard(Turtle):
     """Scoreboard for the Snake Game to keep track of players score"""
@@ -16,6 +17,8 @@ class Scoreboard(Turtle):
         self.speed("fastest")
         self.goto(0, 270)
         self.score_total = -1
+        with open(HIGH_SCORE_LOCATION) as file:
+            self.high_score = int(file.read())
         self.update_score()
     
     
@@ -24,11 +27,17 @@ class Scoreboard(Turtle):
         
         self.score_total += 1
         self.clear()
-        self.write(f"Score: {self.score_total}", align=ALIGN, font=FONT)
+        self.write(f"Score: {self.score_total}  High Score: {self.high_score}", align=ALIGN, font=FONT)
         
         
-    def game_over(self):
-        """Game is over, player hit wall or self"""
+    def reset_game(self):
+        """Game is over, player hit wall or self, update high score and reset"""
         
-        self.goto(0, 0)
-        self.write(f"GAME OVER", align=ALIGN, font=GAME_OVER_FONT)
+        if self.score_total > self.high_score:
+            self.high_score = self.score_total
+            with open(HIGH_SCORE_LOCATION, mode="w") as file:
+                file.write(str(self.high_score))
+        self.score_total = -1
+        self.update_score()
+        # self.goto(0, 0)
+        # self.write(f"GAME OVER", align=ALIGN, font=GAME_OVER_FONT)

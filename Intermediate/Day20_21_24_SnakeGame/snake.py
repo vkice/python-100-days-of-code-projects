@@ -64,6 +64,13 @@ class Snake:
         self.create_segment(tail_x_pos, tail_y_pos)
         self.screen.update()
         
+    
+    def reset_snake(self):
+        """Player has hit a wall/tail, reset the snake body and position"""
+        
+        for segment in self.segment_list:
+            segment.hideturtle()
+        self.__init__()
         
     # Four functions to change heading of the snake head, checks if attempting to move opposite current heading
     def up(self):

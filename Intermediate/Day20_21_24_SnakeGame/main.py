@@ -45,8 +45,9 @@ while game_running:
     if  snake.detect_collision():
         update_game()
         snake.move()
-        scoreboard.game_over()
-        game_running = False
+        scoreboard.reset_game()
+        snake.reset_snake()
+        # game_running = False
     
 # User clicks to exit game
 screen.exitonclick()
